@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #D4A574 0%, #8B6F47 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 0.8s ease-in;
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .heart {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(1.1); }
+            20%, 40% { transform: scale(1); }
+        }
+
+        h1 {
+            color: #6B4423;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .question {
+            color: #555;
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #A0826D 0%, #8B6F47 100%);
+            color: white;
+            border: none;
+            padding: 20px 30px;
+            font-size: 1.2em;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(139, 111, 71, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(139, 111, 71, 0.5);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .response {
+            display: none;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .response h2 {
+            color: #6B4423;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .response p {
+            color: #555;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #A0826D;
+            position: absolute;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="question-section">
+            <div style="text-align: right; color: #6B4423; font-style: italic; margin-bottom: 30px; font-size: 1.1em;">To Cherimoya</div>
+            <p class="question">
+                <em>"In all the world, there is no heart for me like yours.<br>
+                In all the world, there is no love for you like mine."</em>
+                <br><br>
+                <strong>Will you be my Valentine?</strong>
+            </p>
+            <div class="buttons">
+                <button onclick="respond('yes')">Yes! 💝</button>
+                <button onclick="respond('no')" id="maybeBtn">No</button>
+            </div>
+        </div>
+
+        <div id="response-section" class="response">
+            <p style="font-size: 1.4em; color: #6B4423; margin-top: 60px;">
+                Yippee
+                <br><br>
+                I love you
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function respond(answer) {
+            if (answer === 'no') {
+                // Show sad message with teddy
+                document.getElementById('question-section').innerHTML = `
+                    <div style="margin-top: 60px;">
+                        <div style="font-size: 80px; margin-bottom: 20px;">😢</div>
+                        <p style="font-size: 1.5em; color: #6B4423;">
+                            Wow so you don't love me
+                        </p>
+                    </div>
+                `;
+            } else {
+                // Hide question section
+                document.getElementById('question-section').style.display = 'none';
+                
+                // Show response section
+                document.getElementById('response-section').style.display = 'block';
+                
+                // Create confetti
+                createConfetti();
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#A0826D', '#8B6F47', '#D4A574', '#6B4423', '#C19A6B'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.opacity = '1';
+                    confetti.style.borderRadius = '50%';
+                    confetti.style.animation = 'confetti-fall 3s linear forwards';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+    </script>
+</body>
+</html>
